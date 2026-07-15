@@ -10,6 +10,8 @@ services:
       - ./Caddyfile:/etc/caddy/Caddyfile:ro
     depends_on:
       - frontend
+      - backend
+      - db
 
   frontend:
     build:
@@ -20,7 +22,7 @@ services:
     build:
       context: ./backend
     restart: unless-stopped
-    depends-on:
+    depends_on:
       - db
     environment:
       ConnectionStrings__Default: Host=db;Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
