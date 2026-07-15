@@ -13,13 +13,20 @@ builder.Services.AddControllers();
 // register repositories
 builder.Services.AddScoped<ITestRepository, TestRepository>();
 
+builder.Services.AddOpenApi();
+
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseNpgsql(builder.Configuration.GetConnectionString("Default"))
         .UseSnakeCaseNamingConvention());
 
-builder.Services.AddOpenApi();
-
 var app = builder.Build();
+
+// apply migrations
+using (var scope = app.Services.CreateScope())
+{
+    var db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    db.Database.Migrate();
+}
 
 if (app.Environment.IsDevelopment())
 {
