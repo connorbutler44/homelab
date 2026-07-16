@@ -1,11 +1,11 @@
 import { useEffect, useState, type PropsWithChildren } from "react";
 import {
-  AuthorizationContext,
-  type AuthorizationState,
-} from "./AuthorizationContext";
+  AuthenticationContext,
+  type AuthenticationState,
+} from "./AuthenticationContext";
 
-export const AuthorizationProvider = (props: PropsWithChildren) => {
-  const [authState, setAuthState] = useState<AuthorizationState>({
+export const AuthenticationProvider = (props: PropsWithChildren) => {
+  const [authState, setAuthState] = useState<AuthenticationState>({
     isLoggedIn: false,
   });
   const [isLoading, setLoading] = useState<boolean>(true);
@@ -75,7 +75,7 @@ export const AuthorizationProvider = (props: PropsWithChildren) => {
   }, []);
 
   return (
-    <AuthorizationContext.Provider
+    <AuthenticationContext.Provider
       value={{
         ...authState,
         isLoading,
@@ -84,6 +84,6 @@ export const AuthorizationProvider = (props: PropsWithChildren) => {
       }}
     >
       {props.children}
-    </AuthorizationContext.Provider>
+    </AuthenticationContext.Provider>
   );
 };

@@ -10,8 +10,20 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@mantine/charts": "^9.4.1",
+    "@mantine/core": "^9.4.1",
+    "@mantine/dates": "^9.4.1",
+    "@mantine/dropzone": "^9.4.1",
+    "@mantine/form": "^9.4.1",
+    "@mantine/hooks": "^9.4.1",
+    "@mantine/modals": "^9.4.1",
+    "@mantine/notifications": "^9.4.1",
+    "@mantine/nprogress": "^9.4.1",
+    "@mantine/spotlight": "^9.4.1",
+    "dayjs": "^1.11.21",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7"
+    "react-dom": "^19.2.7",
+    "recharts": "^3.9.2"
   },
   "devDependencies": {
     "@babel/core": "^7.29.7",

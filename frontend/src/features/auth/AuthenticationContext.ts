@@ -4,27 +4,27 @@ export interface User {
   username: string;
 }
 
-interface AuthorizationActions {
+interface AuthenticationActions {
   isLoading: boolean;
   performLogin: (username: string, password: string) => Promise<void>;
   performLogout: () => Promise<void>;
 }
 
-interface LoggedInAuthorizationState {
+interface LoggedInAuthenticationState {
   user: User;
   isLoggedIn: true;
 }
 
-interface LoggedOutAuthorizationState {
+interface LoggedOutAuthenticationState {
   isLoggedIn: false;
 }
 
-export type AuthorizationState =
-  | LoggedInAuthorizationState
-  | LoggedOutAuthorizationState;
+export type AuthenticationState =
+  | LoggedInAuthenticationState
+  | LoggedOutAuthenticationState;
 
-export const AuthorizationContext = createContext<
-  AuthorizationState & AuthorizationActions
+export const AuthenticationContext = createContext<
+  AuthenticationState & AuthenticationActions
 >({
   isLoading: true,
   isLoggedIn: false,
