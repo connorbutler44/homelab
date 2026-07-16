@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Homelab.Models;
+using Homelab.Domain;
 
 namespace Homelab.Data;
 

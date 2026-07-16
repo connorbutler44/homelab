@@ -1,4 +1,4 @@
-namespace Homelab.Models;
+namespace Homelab.Domain;
 
 public class TestModel
 {
