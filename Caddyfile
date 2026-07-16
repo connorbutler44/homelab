@@ -3,11 +3,7 @@
         reverse_proxy backend:8080
     }
 
-    handle /login {
-        reverse_proxy backend:8080
-    }
-
-    handle /logout {
+    handle /auth/* {
         reverse_proxy backend:8080
     }
 

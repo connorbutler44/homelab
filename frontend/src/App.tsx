@@ -1,60 +1,44 @@
-import { useState } from "react";
 import "./App.css";
+import { useContext, useState } from "react";
+import { AuthorizationContext } from "./AuthorizationContext";
 
 function App() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
-
-  const performLogin = async () => {
-    await fetch("/login", {
-      method: "POST",
-      credentials: "include",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        Username: username,
-        Password: password,
-      }),
-    }).then(console.log);
-  };
-
-  const performLogout = async () => {
-    await fetch("/logout", {
-      method: "POST",
-      credentials: "include",
-    }).then(console.log);
-  };
-
-  const performLoggedInTest = async () => {
-    await fetch("/api/finance/test", {
-      method: "POST",
-      credentials: "include",
-    }).then(console.log);
-  };
+  const auth = useContext(AuthorizationContext);
 
   return (
     <div>
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
+      <div>
+        <input
+          type="text"
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
+        />
 
-      <input
-        type="text"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button type="button" onClick={performLogin}>
-        Login
-      </button>
-      <button type="button" onClick={performLogout}>
-        Logout
-      </button>
-      <button type="button" onClick={performLoggedInTest}>
-        Logged In Test
-      </button>
+        <input
+          type="text"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+        />
+        <button
+          type="button"
+          onClick={() => auth.performLogin(username, password)}
+        >
+          Login
+        </button>
+        <button type="button" onClick={() => auth.performLogout()}>
+          Logout
+        </button>
+      </div>
+      <div>
+        {auth.isLoading ? "🟠" : auth.isLoggedIn ? "🟢" : "🔴"}
+        {auth.isLoggedIn ? (
+          <>Logged in as: {auth.user.username}</>
+        ) : (
+          <>Logged out</>
+        )}
+      </div>
     </div>
   );
 }

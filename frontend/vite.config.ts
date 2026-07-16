@@ -12,12 +12,7 @@ export default defineConfig({
         changeOrigin: true,
         secure: false,
       },
-      "/login": {
-        target: "https://localhost:7011",
-        changeOrigin: true,
-        secure: false,
-      },
-      "/logout": {
+      "/auth": {
         target: "https://localhost:7011",
         changeOrigin: true,
         secure: false,

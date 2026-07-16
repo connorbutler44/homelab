@@ -16,9 +16,10 @@ public static class AuthenticationEndpoints
 
     public static IEndpointRouteBuilder MapAuthenticationEndpoints(this IEndpointRouteBuilder app)
     {
-        app.MapPost("/login", Login)
+        app.MapPost("/auth/login", Login)
             .AllowAnonymous();
-        app.MapPost("/logout", Logout);
+        app.MapPost("/auth/logout", Logout);
+        app.MapGet("/auth/me", Me);
 
         return app;
     }
@@ -57,5 +58,13 @@ public static class AuthenticationEndpoints
             CookieAuthenticationDefaults.AuthenticationScheme);
 
         return Results.Ok();
+    }
+
+    private static async Task<IResult> Me(ClaimsPrincipal user)
+    {
+        return Results.Ok(new
+        {
+            username = user.Identity?.Name
+        });
     }
 }
