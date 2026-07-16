@@ -26,6 +26,8 @@ services:
       - db
     environment:
       ConnectionStrings__Default: Host=db;Port=${POSTGRES_PORT};Database=${POSTGRES_DB};Username=${POSTGRES_USER};Password=${POSTGRES_PASSWORD}
+      Authentication__Username: ${AUTH_USERNAME}
+      Authentication__PasswordHash: ${AUTH_PASSWORD_HASH}
 
   db:
     image: postgres:18
