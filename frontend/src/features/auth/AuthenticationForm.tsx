@@ -1,6 +1,7 @@
 import {
   Button,
   Container,
+  LoadingOverlay,
   Paper,
   PasswordInput,
   TextInput,
@@ -11,6 +12,7 @@ import type { UseFormReturnType } from "@mantine/form";
 import type { AuthenticationFormValues } from "./AuthenticationFormValues";
 
 interface Props {
+  isLoading: boolean;
   form: UseFormReturnType<AuthenticationFormValues>;
 }
 
@@ -23,7 +25,11 @@ export function AuthenticationForm(props: Props) {
         Sign In
       </Title>
 
-      <Paper withBorder shadow="sm" p={22} mt={30} radius="md">
+      <Paper withBorder shadow="sm" p={22} mt={30} radius="md" pos="relative">
+        <LoadingOverlay
+          visible={props.isLoading}
+          loaderProps={{ children: "Loading..." }}
+        />
         <TextInput
           {...form.getInputProps("username")}
           key={form.key("username")}

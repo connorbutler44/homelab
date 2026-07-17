@@ -1,11 +1,11 @@
-import { useContext } from "react";
 import { AuthenticationForm } from "../features/auth/AuthenticationForm";
 import { useForm } from "@mantine/form";
-import { AuthenticationContext } from "../features/auth/AuthenticationContext";
 import type { AuthenticationFormValues } from "../features/auth/AuthenticationFormValues";
+import { Navigate } from "react-router";
+import { useAuth } from "../features/auth/hooks";
 
 export function AuthenticationPage() {
-  const auth = useContext(AuthenticationContext);
+  const auth = useAuth();
 
   const form = useForm<AuthenticationFormValues>({
     initialValues: {
@@ -18,9 +18,13 @@ export function AuthenticationPage() {
     await auth.performLogin(values.username, values.password);
   });
 
+  if (!auth.isLoading && auth.isLoggedIn) {
+    return <Navigate to="/" />;
+  }
+
   return (
     <form onSubmit={handleSubmit}>
-      <AuthenticationForm form={form} />
+      <AuthenticationForm form={form} isLoading={auth.isLoading} />
     </form>
   );
 }

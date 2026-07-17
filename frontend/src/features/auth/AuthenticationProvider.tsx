@@ -3,6 +3,7 @@ import {
   AuthenticationContext,
   type AuthenticationState,
 } from "./AuthenticationContext";
+import { ApiRoutes } from "./apiRoutes";
 
 export const AuthenticationProvider = (props: PropsWithChildren) => {
   const [authState, setAuthState] = useState<AuthenticationState>({
@@ -13,7 +14,7 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
   const performLogin = async (username: string, password: string) => {
     setLoading(true);
 
-    await fetch("/auth/login", {
+    await fetch(ApiRoutes.Login, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -40,7 +41,7 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
   const performLogout = async () => {
     setLoading(true);
 
-    await fetch("/auth/logout", {
+    await fetch(ApiRoutes.Logout, {
       method: "POST",
       credentials: "include",
     })
@@ -53,11 +54,10 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
   };
 
   const performHeartbeatCheck = () => {
-    fetch("/auth/me", {
+    fetch(ApiRoutes.Me, {
       credentials: "include",
     })
       .then(async (res) => {
-        console.log(res);
         if (res.ok) {
           setAuthState({
             isLoggedIn: true,
