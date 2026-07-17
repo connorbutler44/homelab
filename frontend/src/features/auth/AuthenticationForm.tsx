@@ -42,7 +42,7 @@ export function AuthenticationForm(props: Props) {
           {...form.getInputProps("password")}
           key={form.key("password")}
           label="Password"
-          placeholder="Password"
+          placeholder="Hunter2"
           required
           mt="md"
           radius="md"

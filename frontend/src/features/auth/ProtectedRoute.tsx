@@ -6,7 +6,7 @@ export function ProtectedRoute() {
   const auth = useAuth();
 
   if (auth.isLoading) {
-    return <LoadingOverlay />;
+    return <LoadingOverlay visible loaderProps={{ children: "Loading..." }} />;
   }
 
   if (!auth.isLoggedIn) {
