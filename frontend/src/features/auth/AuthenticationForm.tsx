@@ -37,6 +37,7 @@ export function AuthenticationForm(props: Props) {
           placeholder="Username"
           required
           radius="md"
+          size="md"
         />
         <PasswordInput
           {...form.getInputProps("password")}
@@ -46,6 +47,7 @@ export function AuthenticationForm(props: Props) {
           required
           mt="md"
           radius="md"
+          size="md"
         />
         <Button fullWidth mt="xl" radius="md" type="submit">
           Sign in

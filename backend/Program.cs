@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using Homelab.Data;
 using Homelab.Features.Finance;
 using Homelab.Features.Authentication;
+using System;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,6 +29,9 @@ builder.Services
             context.Response.StatusCode = StatusCodes.Status403Forbidden;
             return Task.CompletedTask;
         };
+
+        options.ExpireTimeSpan = TimeSpan.FromHours(2);
+        options.SlidingExpiration = true;
     });
 
 builder.Services

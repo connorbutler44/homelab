@@ -47,7 +47,11 @@ public static class AuthenticationEndpoints
 
         await httpContext.SignInAsync(
             CookieAuthenticationDefaults.AuthenticationScheme,
-            principal);
+            principal,
+            new AuthenticationProperties
+            {
+                IsPersistent = true
+            });
 
         return Results.Ok();
     }
