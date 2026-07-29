@@ -12,6 +12,8 @@ services:
       - frontend
       - backend
       - db
+    environment:
+      SERVER_DOMAIN: ${SERVER_DOMAIN}
 
   frontend:
     build:
