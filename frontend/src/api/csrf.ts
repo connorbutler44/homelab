@@ -20,3 +20,7 @@ export const useStoredCsrfToken = () => {
 
   return csrfToken;
 };
+
+export const clearCsrfToken = () => {
+  sessionStorage.removeItem(CSRF_TOKEN_KEY);
+};

@@ -4,8 +4,7 @@ import {
   type AuthenticationState,
 } from "./AuthenticationContext";
 import { ApiRoutes } from "../../api/apiRoutes";
-import { requestCsrfToken } from "../../api/csrf";
-import { apiFetch } from "../../api/client";
+import { clearCsrfToken, requestCsrfToken } from "../../api/csrf";
 
 export const AuthenticationProvider = (props: PropsWithChildren) => {
   const [authState, setAuthState] = useState<AuthenticationState>({
@@ -14,10 +13,9 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
   const [isLoading, setLoading] = useState<boolean>(true);
 
   const performLogin = async (username: string, password: string) => {
-    console.log("Perform login start");
     setLoading(true);
 
-    await apiFetch(ApiRoutes.Login, {
+    await fetch(ApiRoutes.Login, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -29,7 +27,6 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
       }),
     })
       .then((res) => {
-        console.log("Perform login success");
         if (res.ok) {
           performHeartbeatCheck();
         } else {
@@ -38,7 +35,7 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
         }
       })
       .catch((error: unknown) => {
-        console.log("Perform login fail", error);
+        console.log("Login failed: ", error);
         setLoading(false);
       });
   };
@@ -46,20 +43,21 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
   const performLogout = async () => {
     setLoading(true);
 
-    await apiFetch(ApiRoutes.Logout, {
+    await fetch(ApiRoutes.Logout, {
       method: "POST",
       credentials: "include",
     })
       .then((res) => {
         if (res.ok) {
           setAuthState({ isLoggedIn: false });
+          clearCsrfToken();
         }
       })
       .finally(() => setLoading(false));
   };
 
   const performHeartbeatCheck = () => {
-    apiFetch(ApiRoutes.Me, {
+    fetch(ApiRoutes.Me, {
       credentials: "include",
     })
       .then(async (res) => {

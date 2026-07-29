@@ -15,8 +15,6 @@ export function AuthenticationPage() {
   });
 
   const handleSubmit = form.onSubmit(async (values) => {
-    console.log("submit");
-    console.log(values);
     await auth.performLogin(values.username, values.password);
   });
 
