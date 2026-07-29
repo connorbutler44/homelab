@@ -2,18 +2,21 @@ using Homelab.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class FinanceTransactionConfiguration
-    : IEntityTypeConfiguration<FinanceTransaction>
+namespace Homelab.Data.Configurations
 {
-    public void Configure(EntityTypeBuilder<FinanceTransaction> builder)
+    public class FinanceTransactionConfiguration
+        : IEntityTypeConfiguration<FinanceTransaction>
     {
-        builder
-            .HasKey(x => x.Id);
+        public void Configure(EntityTypeBuilder<FinanceTransaction> builder)
+        {
+            builder
+                .HasKey(x => x.Id);
 
-        builder
-            .HasOne(x => x.FinanceAccount)
-            .WithMany(x => x.Transactions)
-            .HasForeignKey(x => x.FinanceAccountId)
-            .OnDelete(DeleteBehavior.Restrict);
+            builder
+                .HasOne(x => x.FinanceAccount)
+                .WithMany(x => x.Transactions)
+                .HasForeignKey(x => x.FinanceAccountId)
+                .OnDelete(DeleteBehavior.Restrict);
+        }
     }
 }

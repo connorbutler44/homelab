@@ -1,12 +1,12 @@
 import { Button, Container, FileInput, NativeSelect } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { ACCOUNTS } from "./financeTypes";
+import { PROVIDERS } from "./financeTypes";
 import { ApiRoutes } from "../../api/apiRoutes";
 import { apiFetch } from "../../api/client";
 
 interface FinanceImportFormValues {
   file: File;
-  account: keyof typeof ACCOUNTS;
+  provider: keyof typeof PROVIDERS;
 }
 
 export function FinanceImportForm() {
@@ -15,7 +15,7 @@ export function FinanceImportForm() {
   const handleSubmit = form.onSubmit(async (values) => {
     const formData = new FormData();
 
-    formData.append("Account", values.account);
+    formData.append("ProviderKey", values.provider);
     formData.append("File", values.file);
 
     apiFetch(ApiRoutes.ImportTransactions, {
@@ -30,10 +30,10 @@ export function FinanceImportForm() {
     <Container size={420} my={40}>
       <form onSubmit={handleSubmit}>
         <NativeSelect
-          {...form.getInputProps("account")}
+          {...form.getInputProps("provider")}
           label="Account"
           description="Which account to import transactions for"
-          data={["", ...Object.keys(ACCOUNTS)]}
+          data={["", ...Object.keys(PROVIDERS)]}
           required
         />
         <FileInput

@@ -3,15 +3,10 @@ using Microsoft.Extensions.Options;
 
 namespace Homelab.Features.Authentication;
 
-public class AuthenticationService : IAuthenticationService
+public class AuthenticationService(IOptions<AuthenticationOptions> options) : IAuthenticationService
 {
-    private readonly AuthenticationOptions _options;
+    private readonly AuthenticationOptions _options = options.Value;
     private readonly PasswordHasher<object> _hasher = new();
-
-    public AuthenticationService(IOptions<AuthenticationOptions> options)
-    {
-        _options = options.Value;
-    }
 
 
     /// <summary>

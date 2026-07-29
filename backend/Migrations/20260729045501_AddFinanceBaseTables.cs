@@ -16,7 +16,7 @@ namespace Homelab.Migrations
                 columns: table => new
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
-                    key = table.Column<string>(type: "text", nullable: false),
+                    provider = table.Column<string>(type: "text", nullable: false),
                     name = table.Column<string>(type: "text", nullable: false),
                     account_number_last_four = table.Column<string>(type: "character varying(4)", maxLength: 4, nullable: false)
                 },
@@ -45,9 +45,9 @@ namespace Homelab.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "ix_finance_accounts_key",
+                name: "ix_finance_accounts_provider",
                 table: "finance_accounts",
-                column: "key",
+                column: "provider",
                 unique: true);
 
             migrationBuilder.CreateIndex(

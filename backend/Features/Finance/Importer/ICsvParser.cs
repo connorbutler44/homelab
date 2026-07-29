@@ -2,13 +2,13 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 using Homelab.Data.Entities;
-using Homelab.Features.Finance.Models;
+using Homelab.Domain;
 
 namespace Homelab.Features.Finance.Importer;
 
 public interface ICsvParser
 {
-    FinanceAccount Account { get; }
+    FinanceAccountProvider Provider { get; }
 
     Task<IReadOnlyList<FinanceTransaction>> ParseAsync(Stream file);
 }

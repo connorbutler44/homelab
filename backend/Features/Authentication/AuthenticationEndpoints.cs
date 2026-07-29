@@ -21,16 +21,14 @@ public static class AuthenticationEndpoints
             .AllowAnonymous();
         app.MapPost("/auth/logout", Logout);
         app.MapGet("/auth/me", Me);
-        app.MapGet("/auth/csrf-token", GetCsrfToken)
-            .AllowAnonymous()
-            .DisableAntiforgery();
+        app.MapGet("/auth/csrf-token", GetCsrfToken);
 
         return app;
     }
 
     private static async Task<IResult> Login(
         LoginRequest request,
-        AuthenticationService authService,
+        IAuthenticationService authService,
         HttpContext httpContext)
     {
         if (!authService.ValidateCredentials(request.Username, request.Password))

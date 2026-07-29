@@ -12,7 +12,7 @@ public static class AuthenticationRegistration
         services.Configure<AuthenticationOptions>(
             configuration.GetSection("Authentication"));
 
-        services.AddSingleton<AuthenticationService>();
+        services.AddScoped<IAuthenticationService, AuthenticationService>();
 
         return services;
     }

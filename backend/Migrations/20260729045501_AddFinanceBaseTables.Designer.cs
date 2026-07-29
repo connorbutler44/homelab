@@ -12,7 +12,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Homelab.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260729014438_AddFinanceBaseTables")]
+    [Migration("20260729045501_AddFinanceBaseTables")]
     partial class AddFinanceBaseTables
     {
         /// <inheritdoc />
@@ -38,22 +38,22 @@ namespace Homelab.Migrations
                         .HasColumnType("character varying(4)")
                         .HasColumnName("account_number_last_four");
 
-                    b.Property<string>("Key")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("key");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("name");
 
+                    b.Property<string>("Provider")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("provider");
+
                     b.HasKey("Id")
                         .HasName("pk_finance_accounts");
 
-                    b.HasIndex("Key")
+                    b.HasIndex("Provider")
                         .IsUnique()
-                        .HasDatabaseName("ix_finance_accounts_key");
+                        .HasDatabaseName("ix_finance_accounts_provider");
 
                     b.ToTable("finance_accounts", (string)null);
                 });

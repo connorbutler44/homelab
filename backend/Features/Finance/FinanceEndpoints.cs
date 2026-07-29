@@ -1,4 +1,6 @@
 using System.Threading.Tasks;
+using Homelab.Domain;
+using Homelab.Features.Finance.Importer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -9,7 +11,7 @@ namespace Homelab.Features.Finance;
 public static class FinanceEndpoints
 {
     public record ImportTransactionsRequest(
-        FinanceAccount Account,
+        FinanceAccountProvider ProviderKey,
         IFormFile File);
 
     public enum FinanceAccount
@@ -26,8 +28,13 @@ public static class FinanceEndpoints
         return app;
     }
 
-    private static async Task<IResult> ImportTransactions([FromForm] ImportTransactionsRequest request)
+    private static async Task<IResult> ImportTransactions(
+        [FromForm] ImportTransactionsRequest request,
+        ITransactionImporter importer)
     {
+        await using var stream = request.File.OpenReadStream();
+
+        await importer.ImportAsync(stream, request.ProviderKey);
 
         return Results.Ok("Import successful");
     }

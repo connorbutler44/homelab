@@ -2,25 +2,29 @@ using Homelab.Data.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-public class FinanceAccountConfiguration
-    : IEntityTypeConfiguration<FinanceAccount>
+namespace Homelab.Data.Configurations
 {
-    public void Configure(EntityTypeBuilder<FinanceAccount> builder)
+    public class FinanceAccountConfiguration
+        : IEntityTypeConfiguration<FinanceAccount>
     {
-        builder
-            .HasKey(x => x.Id);
+        public void Configure(EntityTypeBuilder<FinanceAccount> builder)
+        {
+            builder
+                .HasKey(x => x.Id);
 
-        builder
-            .HasIndex(x => x.Key)
-            .IsUnique();
+            builder
+                .HasIndex(x => x.Provider)
+                .IsUnique();
 
-        builder
-            .Property(x => x.Key)
-            .IsRequired();
+            builder
+                .Property(x => x.Provider)
+                .HasConversion<string>()
+                .IsRequired();
 
-        builder
-            .Property(x => x.AccountNumberLastFour)
-            .IsRequired()
-            .HasMaxLength(4);
+            builder
+                .Property(x => x.AccountNumberLastFour)
+                .IsRequired()
+                .HasMaxLength(4);
+        }
     }
 }
