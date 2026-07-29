@@ -14,6 +14,7 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
   const [isLoading, setLoading] = useState<boolean>(true);
 
   const performLogin = async (username: string, password: string) => {
+    console.log("Perform login start");
     setLoading(true);
 
     await apiFetch(ApiRoutes.Login, {
@@ -28,6 +29,7 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
       }),
     })
       .then((res) => {
+        console.log("Perform login success");
         if (res.ok) {
           performHeartbeatCheck();
         } else {
@@ -35,7 +37,8 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
           setLoading(false);
         }
       })
-      .catch(() => {
+      .catch((error: unknown) => {
+        console.log("Perform login fail", error);
         setLoading(false);
       });
   };
