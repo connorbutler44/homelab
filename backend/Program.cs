@@ -40,6 +40,8 @@ builder.Services
         .RequireAuthenticatedUser()
         .Build());
 
+builder.Services.AddAntiforgery();
+
 // service registration
 builder.Services
     .AddAuthenticationFeature(builder.Configuration)
@@ -69,6 +71,7 @@ app.UseHttpsRedirection();
 
 app.UseAuthentication();
 app.UseAuthorization();
+app.UseAntiforgery();
 
 // endpoint registration
 app.MapAuthenticationEndpoints();

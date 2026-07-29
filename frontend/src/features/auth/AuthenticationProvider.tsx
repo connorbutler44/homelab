@@ -3,7 +3,9 @@ import {
   AuthenticationContext,
   type AuthenticationState,
 } from "./AuthenticationContext";
-import { ApiRoutes } from "./apiRoutes";
+import { ApiRoutes } from "../../api/apiRoutes";
+import { requestCsrfToken } from "../../api/csrf";
+import { apiFetch } from "../../api/client";
 
 export const AuthenticationProvider = (props: PropsWithChildren) => {
   const [authState, setAuthState] = useState<AuthenticationState>({
@@ -14,7 +16,7 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
   const performLogin = async (username: string, password: string) => {
     setLoading(true);
 
-    await fetch(ApiRoutes.Login, {
+    await apiFetch(ApiRoutes.Login, {
       method: "POST",
       credentials: "include",
       headers: {
@@ -41,7 +43,7 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
   const performLogout = async () => {
     setLoading(true);
 
-    await fetch(ApiRoutes.Logout, {
+    await apiFetch(ApiRoutes.Logout, {
       method: "POST",
       credentials: "include",
     })
@@ -54,7 +56,7 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
   };
 
   const performHeartbeatCheck = () => {
-    fetch(ApiRoutes.Me, {
+    apiFetch(ApiRoutes.Me, {
       credentials: "include",
     })
       .then(async (res) => {
@@ -63,6 +65,7 @@ export const AuthenticationProvider = (props: PropsWithChildren) => {
             isLoggedIn: true,
             user: await res.json(),
           });
+          requestCsrfToken();
         } else {
           setAuthState({ isLoggedIn: false });
         }

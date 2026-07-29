@@ -32,7 +32,6 @@ export function AuthenticationForm(props: Props) {
         />
         <TextInput
           {...form.getInputProps("username")}
-          key={form.key("username")}
           label="Username"
           placeholder="Username"
           required
@@ -41,7 +40,6 @@ export function AuthenticationForm(props: Props) {
         />
         <PasswordInput
           {...form.getInputProps("password")}
-          key={form.key("password")}
           label="Password"
           placeholder="Hunter2"
           required

@@ -1,5 +1,6 @@
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
@@ -20,6 +21,9 @@ public static class AuthenticationEndpoints
             .AllowAnonymous();
         app.MapPost("/auth/logout", Logout);
         app.MapGet("/auth/me", Me);
+        app.MapGet("/auth/csrf-token", GetCsrfToken)
+            .AllowAnonymous()
+            .DisableAntiforgery();
 
         return app;
     }
@@ -69,6 +73,16 @@ public static class AuthenticationEndpoints
         return Results.Ok(new
         {
             username = user.Identity?.Name
+        });
+    }
+
+    private static async Task<IResult> GetCsrfToken(HttpContext context, IAntiforgery antiforgery)
+    {
+        var tokens = antiforgery.GetAndStoreTokens(context);
+
+        return Results.Ok(new
+        {
+            token = tokens.RequestToken,
         });
     }
 }
