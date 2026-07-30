@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Homelab.Migrations
 {
     /// <inheritdoc />
-    public partial class AddFinanceBaseTables : Migration
+    public partial class AddFinanceColumns : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -31,7 +31,11 @@ namespace Homelab.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     finance_account_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    amount = table.Column<int>(type: "integer", nullable: false)
+                    internal_id = table.Column<string>(type: "text", nullable: false),
+                    description = table.Column<string>(type: "text", nullable: false),
+                    extended_details = table.Column<string>(type: "text", nullable: false),
+                    amount = table.Column<decimal>(type: "numeric", nullable: false),
+                    date = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -54,6 +58,12 @@ namespace Homelab.Migrations
                 name: "ix_finance_transactions_finance_account_id",
                 table: "finance_transactions",
                 column: "finance_account_id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_finance_transactions_internal_id",
+                table: "finance_transactions",
+                column: "internal_id",
+                unique: true);
         }
 
         /// <inheritdoc />

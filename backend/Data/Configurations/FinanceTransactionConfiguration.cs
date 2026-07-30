@@ -13,6 +13,10 @@ namespace Homelab.Data.Configurations
                 .HasKey(x => x.Id);
 
             builder
+                .HasIndex(x => x.InternalId)
+                .IsUnique();
+
+            builder
                 .HasOne(x => x.FinanceAccount)
                 .WithMany(x => x.Transactions)
                 .HasForeignKey(x => x.FinanceAccountId)

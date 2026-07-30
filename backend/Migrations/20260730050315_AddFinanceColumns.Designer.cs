@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Homelab.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260729045501_AddFinanceBaseTables")]
-    partial class AddFinanceBaseTables
+    [Migration("20260730050315_AddFinanceColumns")]
+    partial class AddFinanceColumns
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,19 +65,42 @@ namespace Homelab.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<int>("Amount")
-                        .HasColumnType("integer")
+                    b.Property<decimal>("Amount")
+                        .HasColumnType("numeric")
                         .HasColumnName("amount");
+
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date")
+                        .HasColumnName("date");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("description");
+
+                    b.Property<string>("ExtendedDetails")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("extended_details");
 
                     b.Property<Guid>("FinanceAccountId")
                         .HasColumnType("uuid")
                         .HasColumnName("finance_account_id");
+
+                    b.Property<string>("InternalId")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("internal_id");
 
                     b.HasKey("Id")
                         .HasName("pk_finance_transactions");
 
                     b.HasIndex("FinanceAccountId")
                         .HasDatabaseName("ix_finance_transactions_finance_account_id");
+
+                    b.HasIndex("InternalId")
+                        .IsUnique()
+                        .HasDatabaseName("ix_finance_transactions_internal_id");
 
                     b.ToTable("finance_transactions", (string)null);
                 });

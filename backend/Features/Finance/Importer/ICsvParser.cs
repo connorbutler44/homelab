@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
@@ -10,5 +11,5 @@ public interface ICsvParser
 {
     FinanceAccountProvider Provider { get; }
 
-    Task<IReadOnlyList<FinanceTransaction>> ParseAsync(Stream file);
+    Task<IReadOnlyList<FinanceTransaction>> ParseAsync(Stream file, Guid accountId);
 }
